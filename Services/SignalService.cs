@@ -13,7 +13,7 @@ namespace WebApplication1.Services
             _tasks = tasks;
         }
 
-        public void AcceptSignal(Guid objectId)
+        public void AcceptSignal(string objectId)
         {
             _tasks.QueueBackgroundWorkItem(new WorkItem(typeof(ConfirmHandler), new Signal(objectId)));
         }

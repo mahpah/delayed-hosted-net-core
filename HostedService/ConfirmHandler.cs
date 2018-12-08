@@ -17,8 +17,9 @@ namespace WebApplication1.HostedService
 
         public async Task Handle(Signal itemData, CancellationToken token)
         {
-            var delayed = DateTime.Now.Subtract(itemData.Timestamp);
-            await Task.Delay(TimeSpan.FromSeconds(20).Subtract(delayed), token);
+            await Task.Delay(
+                itemData.Timestamp.Add(TimeSpan.FromMinutes(2)).Subtract(DateTime.Now),
+                token);
             await Confirm(itemData);
         }
 
@@ -30,13 +31,13 @@ namespace WebApplication1.HostedService
 
     public class Signal
     {
-        public Signal(Guid buildingId)
+        public Signal(string buildingId)
         {
             BuildingId = buildingId;
             Timestamp = DateTime.Now;
         }
 
-        public Guid BuildingId { get; private set; }
+        public string BuildingId { get; private set; }
         public DateTime Timestamp { get; private set; }
     }
 }

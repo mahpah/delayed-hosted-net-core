@@ -13,11 +13,11 @@ namespace WebApplication1.Services
             _logger = logger;
         }
 
-        public async Task SaveState(Guid buildingId, string state)
+        public async Task SaveState(string buildingId, string state)
         {
             // should check state is conformed or not
             await Task.CompletedTask;
-            _logger.LogInformation("{0} state is {1}", buildingId, state);
+            _logger.LogWarning("{0} {1} state is {2}", DateTime.Now, buildingId, state);
         }
     }
 }

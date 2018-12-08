@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
@@ -12,10 +13,12 @@ namespace WebApplication1.Controllers
     public class SignalController : ControllerBase
     {
         private readonly SignalService _signalService;
+        private readonly ILogger<SignalController> _logger;
 
-        public SignalController(SignalService signalService)
+        public SignalController(SignalService signalService, ILogger<SignalController> logger)
         {
             _signalService = signalService;
+            _logger = logger;
         }
 
         // GET api/values
@@ -34,8 +37,9 @@ namespace WebApplication1.Controllers
 
         // POST api/values
         [HttpPost("warning/{id}")]
-        public IActionResult Post(Guid id)
+        public IActionResult Post(string id)
         {
+            _logger.LogWarning("{0} {1} at risk", DateTime.Now, id);
             _signalService.AcceptSignal(id);
             return Accepted();
         }
